@@ -74,6 +74,7 @@ When using `HY_RATE_LIMIT` and a method specific version, the method specific ve
 Each response includes the following custom headers so a client can track how close they are to the limit:
 
 | Header                | Description                                                                                                     |
+| ----------------------| --------------------------------------------------------------------------------------------------------------- |
 | X-RateLimit-Remaining | How many requests are remaining before hitting the limit                                                        |
 | X-RateLimit-Limit     | What the limit is                                                                                               |
 | X-RateLimit-Reset     | A julian date of when the remaining count is reset (or when the block will be removed if the limit is exceeded) |
