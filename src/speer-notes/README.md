@@ -47,7 +47,9 @@ speer-notes/
 
 ### Rate limiting
 
-The rates are configured by environment variables.  The value for each of the following must be in the form of `(number of requests , time window in seconds)`
+The rates are configured by environment variables.  The value for each of the following must be in the form of
+
+`(number of requests , time window in seconds)`
 
 e.g.
 ```bash
