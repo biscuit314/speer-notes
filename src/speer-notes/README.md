@@ -10,7 +10,7 @@ Here is a brief summary of how the code is organized.
 
 ```plaintext
 speer-notes/
-├── img/                                                 # Speer logos
+├── img/                                      # Speer logos
 ├── README.md
 └── src/
     ├── docker-compose.yml
