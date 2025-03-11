@@ -28,7 +28,7 @@ For the request throttling requirement, I leveraged the ability of nginx to do t
 
 ## Launch the service
 
-## tl;dr
+### tl;dr
 
 * create a virtual environment in the root of the [cloned repo](https://github.com/biscuit314/speer-notes)
 * change to `src/speer-notes`
