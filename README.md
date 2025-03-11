@@ -158,3 +158,6 @@ This instance is empty except for the user `sysop` as provisioned with the `crea
 The easiest way to use it is to change the `{{url}}` variable in Postman to the above.
 
 > NOTE: if using `curl` be sure to add the `-L` option which tells `curl` to follow redirects.
+> e.g. `curl -L -u sysop:swordfish https://speer-notes.pointw.com/api/notes`
+> Include headers by adding `-v`
+> e.g. `curl -v -L -u sysop:swordfish https://speer-notes.pointw.com/api/notes`
