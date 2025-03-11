@@ -33,7 +33,7 @@ speer-notes/
         │   └── api_settings.py               # where additional runtime configuration parameters can be defined
         ├── domain/                           # notes and users are defined here, auto-generating the basic CRUD routes
         ├── hooks/                            # code that fires before/after various events
-        ├── integration/                       # where configuring additional/external services (e.g. Redis, S3, auth0...)
+        ├── integration/                      # where configuring additional/external services (e.g. Redis, S3, auth0...)
         ├── _env.conf                         # override envars for developer (excluded by .gitignore)
         ├── run.py                            # launch the service with this
         ├── hypermea_service.py               # the definition of the service class
