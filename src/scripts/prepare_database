@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo Creating the sysop user
+./create_sysop.py
+
+echo Creating the full text search index for notes
+./create_full_text_search_index.py

@@ -1,0 +1,722 @@
+{
+	"info": {
+		"_postman_id": "3702d7b7-e6f9-4d85-a238-f281ce2674dd",
+		"name": "Speer Technologies - Notes API",
+		"description": "Be sure to also import and activate the `speer-notes.postman_environment.json`\n\nBefore using this collection, spin up an instance of `speer-notes`\n\ne.g. `docker compose up -d` in `src/` folder. If running a clean instance the database is empty. Prepare the database by running `src/scripts/prepare_database` This will\n\n- create the sysop user (admin)\n    \n- create the full-text search index\n    \n\nTo run this collection against an instance NOT on `localhost` change the value of `{{url}}` in the **speer-notes** Postman environment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2422371"
+	},
+	"item": [
+		{
+			"name": "_administrator",
+			"item": [
+				{
+					"name": "Populate other users (run create_sysop.py first)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"username\": \"alice\",\n        \"name\": \"Alice Cooper\",\n        \"password\": \"password\"\n    },\n    {\n        \"username\": \"bob\",\n        \"name\": \"Bob Kane\",\n        \"password\": \"password\"\n    },\n    {\n        \"username\": \"carol\",\n        \"name\": \"Carol Markus\",\n        \"password\": \"password\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup new user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic c3lzb3A6cGFzc3dvcmQ=",
+								"description": "Sysop",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"frank\",\n    \"name\": \"Frank Castle\",\n    \"password\": \"i_am_the_punisher\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signup new user administrator",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic c3lzb3A6cGFzc3dvcmQ=",
+								"description": "Sysop",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"dave\",\n    \"name\": \"Dave Farley\",\n    \"password\": \"bdd_rocks\",\n    \"isAdmin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get everyone's notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete everyone's notes",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"description": "Start here, especially to populate the other users (after running `src/scripts/prepare_database` if running a fresh instance)\n\nAll requests in this folder are authenticated with the administrator's credentials (`sysop:swordfish)`",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "swordfish",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "sysop",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "alice",
+			"item": [
+				{
+					"name": "Post alice's notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"title\": \"Midnight Snack Inspiration\",\n        \"body\": \"Thought: Peanut butter and jelly sandwiches taste better when eaten in cemetery moonlight. Possible song idea?\"\n    },\n    {\n        \"title\": \"Golf Wisdom #18\",\n        \"body\": \"Realized today that a hole-in-one feels almost as good as scaring the pants off a crowd. Almost.\"\n    },\n    {\n        \"title\": \"New Song Idea - 'Mascara & Mayhem'\",\n        \"body\": \"Lyrics concept: Behind every smudged eyeliner is a story of chaos, rebellion, and really strong coffee.\"\n    },\n    {\n        \"title\": \"Culinary Revelation\",\n        \"body\": \"Discovered that black licorice pairs suspiciously well with hot sauce. Don’t judge me until you try it.\"\n    },\n    {\n        \"title\": \"Existential Golf Question\",\n        \"body\": \"Twist on the old cliché :If a golfer screams in the bunker and no one hears, does he still make the cut?\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get alice's notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get alice's notes (titles only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes?projection={\"title\":1}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "{\"title\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one of alice's notes (replace ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes/67ccf85c543acf8b106a581d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"67ccf85c543acf8b106a581d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Share a note with bob (replace ID)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"bob\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/notes/67ccf42729efac83be3bad5a/share",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"67ccf42729efac83be3bad5a",
+								"share"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put changed note (replace ID in URL, If-Match header)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "dbf84b738b8b4fd9f788d90b071dc67f6f68ef9f",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"67ccf85c543acf8b106a581d\",\n    \"title\": \"Song Idea - 'Mascara & Mayhem'\",\n    \"body\": \"Lyrics concept: Behind every smudged eyeliner is a story of chaos, rebellion, and really strong coffee.\",\n    \"_updated\": \"2025-03-09T02:09:32\",\n    \"_created\": \"2025-03-09T02:09:32\",\n    \"_etag\": \"dbf84b738b8b4fd9f788d90b071dc67f6f68ef9f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/notes/67ccf85c543acf8b106a581d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"67ccf85c543acf8b106a581d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Head request for alice's notes",
+					"request": {
+						"method": "HEAD",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search alice's notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/search?q=song+peanut",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "song+peanut"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Alice has the most complete set of operations. Use alice to explore all of the functionality.\n\nAll requests in this folder are authenticated with Alice's credentials (`alice:password`)",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "password",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "alice",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "bob",
+			"item": [
+				{
+					"name": "Post bob's notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"title\": \"Villain Brainstorming\",\n        \"body\": \"Pondering a new adversary named 'The Stapler'—attacks Gotham with an endless barrage of paperwork. Too mundane?\"\n    },\n    {\n        \"title\": \"Cape Musings\",\n        \"body\": \"Batman’s cape should always billow dramatically, even indoors. Need to remind artists: gravity is optional in Gotham.\"\n    },\n    {\n        \"title\": \"Batmobile Improvement\",\n        \"body\": \"Idea: Add espresso machine and donut warmer. Even crime fighters need breakfast-on-the-go.\"\n    },\n    {\n        \"title\": \"Robin’s Day Off\",\n        \"body\": \"Considering a story where Robin finally takes a vacation. Chaos ensues. Alfred not pleased.\"\n    },\n    {\n        \"title\": \"Nighttime Reflections\",\n        \"body\": \"Realized Batman never worries about laundry day. Black hides stains wonderfully.\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get bob's notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get bob's notes (titles only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one of bob's notes (replace ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes/67ccf85c543acf8b106a581d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"67ccf85c543acf8b106a581d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Bob is mainly here so Alice has someone to share a note with.\n\nAll requests in this folder are authenticated with Bob's credentials (`bob:password`)",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "password",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "bob",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "carol",
+			"item": [
+				{
+					"name": "Post carol's notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"title\": \"Genesis Device Reminder\",\n        \"body\": \"Must label buttons more clearly next time. 'Activate' and 'Cancel' too easy to confuse during space turbulence.\"\n    },\n    {\n        \"title\": \"Kirk’s Birthday Gift\",\n        \"body\": \"What do you get a man who boldly goes everywhere? Considering monogrammed slippers—practical yet cozy.\"\n    },\n    {\n        \"title\": \"Lab Snack Preferences\",\n        \"body\": \"No more tribble-shaped cookies at team meetings. Too many unsettling ethical debates.\"\n    },\n    {\n        \"title\": \"Project Genesis Follow-up\",\n        \"body\": \"New protocol: No more naming top-secret projects after biblical events. Raises unnecessary eyebrows.\"\n    },\n    {\n        \"title\": \"Personal Note\",\n        \"body\": \"Sometimes wish Kirk’s charm had a stun setting. Would simplify conversations immensely.\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get carol's notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get carol's notes (titles only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes?projection={\"title\":1}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "{\"title\":1}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one of carol's notes (replace ID)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/notes/67ccf85c543acf8b106a581d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"notes",
+								"67ccf85c543acf8b106a581d"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Three is the magic number. Carol adds that little sprinkle of fairy dust.\n\nAll requests in this folder are authenticated with Carol's credentials (`carol:password`)",
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "username",
+						"value": "carol",
+						"type": "string"
+					},
+					{
+						"key": "password",
+						"value": "password",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Login (get token)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"alice\",\n    \"password\": \"password\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

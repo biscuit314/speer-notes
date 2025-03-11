@@ -1,0 +1,53 @@
+name: speer-notes
+
+services:
+  speer-notes-nginx:
+    image: nginx:stable-alpine
+    container_name: speer-notes-nginx
+    ports:
+      - "2112:2112"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - speer-notes
+
+  speer-notes:
+    image: speer-notes
+    container_name: speer-notes
+    build: .
+    # ports:
+    #   - "80:80"
+    environment:
+      HY_INSTANCE_NAME: speer-notes development container
+      HY_MONGO_HOST: speer-notes-mongo
+      HY_API_PORT: 80
+      HY_CACHE_CONTROL: no-cache, no-store, must-revalidate
+      HY_CACHE_EXPIRES: 30
+
+      HY_URL_PREFIX: api
+      HY_DISABLE_RFC6861: Yes
+      HY_DISABLE_HYPERMEDIA: Yes
+      HY_RATE_LIMIT: (10, 15)
+      REDIS_HOST: speer-notes-redis
+    depends_on:
+      - speer-notes-mongo
+      - speer-notes-redis
+
+  speer-notes-redis:
+    image: redis
+    container_name: speer-notes-redis
+    ports:
+      - '6379:6379'    
+
+  speer-notes-mongo:
+    image: mongo
+    container_name: speer-notes-mongo
+    volumes:
+      - speer-notes-mongodb:/data/db
+      - speer-notes-mongodb_config:/data/configdb
+    ports:
+      - "27017:27017"
+
+volumes:
+     speer-notes-mongodb:
+     speer-notes-mongodb_config:

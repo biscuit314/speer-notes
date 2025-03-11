@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="28.279"
+   height="27.287"
+   viewBox="0 0 28.279 27.287"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="speer-logo.svg"
+   inkscape:export-filename="/home/michael/icon.png"
+   inkscape:export-xdpi="509.21179"
+   inkscape:export-ydpi="509.21179"
+   inkscape:version="1.4.1-rc (832c77b156, 2025-02-28)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="27.99868"
+     inkscape:cx="14.125666"
+     inkscape:cy="13.6435"
+     inkscape:window-width="2560"
+     inkscape:window-height="1332"
+     inkscape:window-x="3840"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     id="Speer_Logo_Header"
+     data-name="Speer Logo_Header"
+     d="M105.894,132.586h3.214v12.262h12.677v3.133H106.608v11.892h-.714V147.991H93.505v-.769h12.4Z"
+     transform="translate(-93.505 -132.586)" />
+</svg>
